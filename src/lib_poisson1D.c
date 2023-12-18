@@ -9,55 +9,45 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv)	{
+void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv) {
 	int index = 0;
 
 	for (int i = 0; i < (*la); ++i)	{
-		if (((*kv) + 2) < (*lab) && i < (*la) / 2)	{
-			for (int j = 0; j < (*lab) - ((*kv) + 2); ++j)	{
-				AB[index] = 0;
-				index++;
-			}
-		}
 
-		for (int j = 0; j < (*kv); ++j)	{
-			AB[index] = 1;
-			index++;
-		}
+    if (i == 0) {
+      AB[index + (*kv)] = 0.0;
+      AB[index + (*kv) + 1] = 2.0;
+      AB[index + (*kv) + 2] = -1.0;
+    }
+    else if (i == (*la)-1)  {
+      AB[index + (*kv)] = -1.0;
+      AB[index + (*kv) + 1] = 2.0;
+      AB[index + (*kv) + 2] = 0.0;
+    }
+    else  {
+      AB[index + (*kv)] = -1.0;
+      AB[index + (*kv) + 1] = 2.0;
+      AB[index + (*kv) + 2] = -1.0;
+    }
 
-		for (int j = 0; j < ((*lab)-(*kv)); ++j)	{
-			if (i == j)	{
-				AB[index] = 2;
-			}
-
-			if (i+1 == j || i-1 == j)	{
-				AB[index] = -1;
-			}
-
-			index++;
-		}
-
-		if ((*kv) + 2 < (*lab) && i > (*la) / 2)	{
-			for (int j = 0; j < (*lab) - ((*kv) + 2); ++j)	{
-				AB[index] = 0;
-				index++;
-			}
-		}
-
-		printf("%d %d\n", (*lab) * (*la), index);
-	}
+    index += (*lab);
+  }
 }
 
-void set_GB_operator_colMajor_poisson1D_Id(double* AB, int *lab, int *la, int *kv){
+void set_GB_operator_colMajor_poisson1D_Id(double* AB, int *lab, int *la, int *kv)  {
+  int index = 0;
+
+	for (int i = 0; i < (*la); ++i)	{
+
+    AB[index + (*kv) + 1] = 1.0; 
+
+    index += (*lab);
+  }
 }
 
 void set_dense_RHS_DBC_1D(double* RHS, int* la, double* BC0, double* BC1){
 	RHS[0] = *BC0;
 	RHS[*la - 1] = *BC1;
-
-	for (int i = 1; i < *la-1; ++i)	{
-		RHS[i] = 0;
-	}
 }  
 
 void set_analytical_solution_DBC_1D(double* EX_SOL, double* X, int* la, double* BC0, double* BC1){
@@ -164,14 +154,3 @@ int indexABCol(int i, int j, int *lab){
 int dgbtrftridiag(int *la, int*n, int *kl, int *ku, double *AB, int *lab, int *ipiv, int *info){
   return *info;
 }
-
-// int main()  {
-//     double *AB = (double *) malloc(sizeof(double)*3*3);
-//     int la = 3;
-//     int lab = 3;
-//     int kv = 1;
-
-//     set_GB_operator_colMajor_poisson1D(AB, &lab, &la, &kv);
-
-//     return 0;
-// }

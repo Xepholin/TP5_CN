@@ -11,5 +11,5 @@ RUN apt-get update && \
 # Copy the local code to the container
 COPY . .
 
-# sudo docker build -t poisson:tag .
-# sudo docker run -it --rm -v /home/xepho/Bureau/Poisson:/poisson poisson:tag
+# sudo docker build -t poisson .
+# sudo docker run -it --rm -v /home/xepho/Bureau/poisson:/poisson poisson
