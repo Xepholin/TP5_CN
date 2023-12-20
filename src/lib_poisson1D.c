@@ -60,6 +60,10 @@ void set_grid_points_1D(double *x, int *la) {
 	}
 }
 
+double relative_forward_error(double *x, double *y, int *la) {
+	return 0;
+}
+
 int indexABCol(int i, int j, int *lab) {
 	return 0;
 }

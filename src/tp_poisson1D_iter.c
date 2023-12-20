@@ -116,7 +116,8 @@ int main(int argc, char *argv[])
 	write_vec(SOL, &la, "SOL.dat");
 
 	/* Write convergence history */
-	write_vec(resvec, &nbite, "RESVEC.dat");
+	if (IMPLEM == 0)
+		write_vec(resvec, &nbite, "RESVEC.dat");
 
 	free(resvec);
 	free(RHS);

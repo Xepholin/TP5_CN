@@ -1,12 +1,12 @@
 # Use an official base image (e.g., Debian)
-FROM debian:latest
+FROM debian:11
 
 # Set the working directory
 WORKDIR /poisson
 
 # Install dependencies (adjust based on your application)
 RUN apt-get update && \
-    apt-get install -y make libblas-dev liblapacke-dev liblapack-dev libatlas-base-dev gcc gfortran apt-utils
+    apt-get install -y libblas-dev liblapacke-dev gcc gfortran make apt-utils fish bash
 
 # Copy the local code to the container
 COPY . .
