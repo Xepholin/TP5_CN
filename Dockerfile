@@ -1,5 +1,5 @@
 # Use an official base image (e.g., Debian)
-FROM debian:11
+FROM debian:10
 
 # Set the working directory
 WORKDIR /poisson

@@ -119,6 +119,11 @@ int main(int argc, char *argv[])
 	if (IMPLEM == 0)
 		write_vec(resvec, &nbite, "RESVEC.dat");
 
+	/* Relative forward error */
+	relres = relative_forward_error(EX_SOL, SOL, &la);
+
+	printf("\nThe relative forward error is relres = %e\n", relres);
+
 	free(resvec);
 	free(RHS);
 	free(SOL);
